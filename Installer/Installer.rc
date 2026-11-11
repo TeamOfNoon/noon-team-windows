@@ -1,0 +1,10 @@
+#include <windows.h>
+128 ICON "../res/MfcEdgeDemo.ico"
+6001 RCDATA "Tools/7zCon.sfx"
+6002 RCDATA "SetupMetadata.bin"
+6003 RCDATA "Uninstall.bat"
+6004 RCDATA "Uninstall.ps1"
+6005 RCDATA "Tools/License.txt"
+6006 RCDATA "7-Zip-Notice.txt"
+
+6007 RCDATA "SetupEdition.bin"

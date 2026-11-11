@@ -1,0 +1,12 @@
+﻿Noon product owner: noon-team
+Website: https://nasser-alyamani.org/
+جميع الحقوق محفوظة  لمنتديات البشرى الإسلامية
+All rights reserved to Al-Bushra Islamic Forums.
+
+Original MfcEdgeDemo code by Marius Bancila, modified for this product.
+Original source: https://mariusbancila.ro/blog/2020/01/30/using-microsoft-edge-in-a-native-windows-desktop-app-part-3/
+Licensed under Creative Commons Attribution 4.0 International:
+https://creativecommons.org/licenses/by/4.0/
+Changes include web payload packaging, local content serving, browser behavior,
+and product branding. Product rights notice does not replace third-party licenses.
+Microsoft dependency license and notice files are supplied by NuGet restore under packages/.

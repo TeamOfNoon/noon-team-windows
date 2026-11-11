@@ -1,0 +1,1 @@
+This installer uses 7-Zip by Igor Pavlov, licensed under GNU LGPL with the terms in 7-Zip-License.txt. Source: https://www.7-zip.org/ . Includes modified MfcEdgeDemo by Marius Bancila (CC BY 4.0).

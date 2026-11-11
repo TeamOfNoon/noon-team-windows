@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!-- Project SDK baseline: keep this version for future updates. -->
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <!-- Edit only this path if GraalVM is installed elsewhere. GRAALVM_HOME is also accepted. -->
+    <NoonGraalVMHome Condition="'$(NoonGraalVMHome)'==''">$(GRAALVM_HOME)</NoonGraalVMHome>
+    <NoonGraalVMHome Condition="'$(NoonGraalVMHome)'==''">D:\graalvm-jdk-17.0.18_windows-x64_bin\graalvm-jdk-17.0.18+8.1</NoonGraalVMHome>
+  </PropertyGroup>
+  <!-- The builder copies the parent PE resources, so child EXEs inherit this UAC manifest. -->
+  <ItemDefinitionGroup>
+    <Link>
+      <GenerateManifest>true</GenerateManifest>
+      <EnableUAC>true</EnableUAC>
+      <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
+      <UACUIAccess>false</UACUIAccess>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

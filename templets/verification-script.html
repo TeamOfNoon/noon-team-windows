@@ -1,0 +1,10 @@
+<script>
+function more(){
+  var d=document.getElementById('details');
+  var b=document.getElementById('morebtn');
+  if(!d)return;
+  var show=(d.style.display!=='block');
+  d.style.display=show?'block':'none';
+  if(b)b.style.display=show?'none':'block';
+}
+</script>

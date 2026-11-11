@@ -1,0 +1,12 @@
+Native packaging cleanup
+
+Output: noon.exe. Version remains 1.0.0.1.
+Company/Product: Noon Team / Noon. AppID: NoonTeam.Noon.Desktop.
+Removed unused Postman test handler and obsolete batch launcher arguments/file.
+Static linking, DNS fix, embedded serving and cache commands are unchanged.
+No code-signing certificate was supplied; this project remains unsigned.
+These changes do not guarantee Avast acceptance.
+
+The supplied archive has no app folder. Add your actual app folder beside
+GenerateWebResources.ps1 before building Release x64 using Visual Studio v142.
+Windows compilation and Avast testing were unavailable in this environment.

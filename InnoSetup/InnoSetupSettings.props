@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup>
+<!-- Leave blank for automatic detection; or enter the full path to ISCC.exe. -->
+<InnoSetupCompilerPath Condition="'$(InnoSetupCompilerPath)'==''">$(INNO_SETUP_ISCC)</InnoSetupCompilerPath>
+</PropertyGroup></Project>

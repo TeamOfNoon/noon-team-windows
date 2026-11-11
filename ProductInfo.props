@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Edit product information HERE, then Rebuild Solution. Version needs four numbers. -->
+  <PropertyGroup>
+    <NoonAppName>Noon</NoonAppName>
+    <NoonAboutMenu>About App...</NoonAboutMenu>
+    <NoonAboutTitle>About Noon / حول نون</NoonAboutTitle>
+    <NoonVersion>1.0.0.1</NoonVersion>
+    <NoonOwner>noon-team</NoonOwner>
+    <NoonWebsite>https://nasser-alyamani.org/</NoonWebsite>
+    <NoonCopyrightYear>2026</NoonCopyrightYear>
+    <NoonRightsArabic>جميع الحقوق محفوظة  لمنتديات البشرى الإسلامية</NoonRightsArabic>
+    <NoonRightsEnglish>All rights reserved to Al-Bushra Islamic Forums.</NoonRightsEnglish>
+  </PropertyGroup>
+  <Target Name="GenerateProductInfo" BeforeTargets="ResourceCompile">
+    <PropertyGroup>
+      <NoonVersionNumbers>$([System.String]::Copy('$(NoonVersion)').Replace('.', ','))</NoonVersionNumbers>
+    </PropertyGroup>
+    <ItemGroup>
+      <NoonProductHeaderLine Include="#define NOON_APP_NAME &quot;$(NoonAppName)&quot;" />
+      <NoonProductHeaderLine Include="#define NOON_ABOUT_MENU &quot;$(NoonAboutMenu)&quot;" />
+      <NoonProductHeaderLine Include="#define NOON_ABOUT_TITLE &quot;$(NoonAboutTitle)&quot;" />
+      <NoonProductHeaderLine Include="#define NOON_VERSION_NUMBERS $(NoonVersionNumbers)" />
+      <NoonProductHeaderLine Include="#define NOON_VERSION_TEXT &quot;$(NoonVersion)&quot;" />
+      <NoonProductHeaderLine Include="#define NOON_ABOUT_VERSION &quot;$(NoonAppName), Version $(NoonVersion)&quot;" />
+      <NoonProductHeaderLine Include="#define NOON_OWNER &quot;$(NoonOwner)&quot;" />
+      <NoonProductHeaderLine Include="#define NOON_ABOUT_OWNER &quot;Owner: $(NoonOwner)&quot;" />
+      <NoonProductHeaderLine Include="#define NOON_WEBSITE &quot;$(NoonWebsite)&quot;" />
+      <NoonProductHeaderLine Include="#define NOON_RIGHTS_AR &quot;$(NoonRightsArabic)&quot;" />
+      <NoonProductHeaderLine Include="#define NOON_RIGHTS_EN &quot;$(NoonRightsEnglish)&quot;" />
+      <NoonProductHeaderLine Include="#define NOON_COPYRIGHT &quot;Copyright (C) $(NoonCopyrightYear) $(NoonOwner). $(NoonRightsEnglish)&quot;" />
+    </ItemGroup>
+    <MakeDir Directories="$(IntDir)" />
+    <WriteLinesToFile File="$(IntDir)ProductInfo.generated.h" Lines="@(NoonProductHeaderLine)" Overwrite="true" WriteOnlyWhenDifferent="true" Encoding="Unicode" />
+  </Target>
+</Project>

@@ -1,0 +1,58 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MfcEdgeDemo", "MfcEdgeDemo.vcxproj", "{048CDDD2-EDAC-4E8B-9ADD-E1A08A78BEAE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NoonJava", "NoonJava\NoonJava.vcxproj", "{76B831DF-4AE0-4CCF-A7F8-737122840BE1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NoonInstaller", "Installer\Installer.vcxproj", "{E57CA8BA-1397-413A-9167-0A189440D021}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NoonInnoSetup", "InnoSetup\NoonInnoSetup.vcxproj", "{B7C24A7A-B7A3-4A7B-891B-F4B39B271822}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NoonUninstaller", "Uninstaller\Uninstaller.vcxproj", "{A6B2899F-3292-4A44-8553-7690BA17491A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{048CDDD2-EDAC-4E8B-9ADD-E1A08A78BEAE}.Debug|x64.ActiveCfg = Debug|x64
+		{048CDDD2-EDAC-4E8B-9ADD-E1A08A78BEAE}.Debug|x64.Build.0 = Debug|x64
+		{048CDDD2-EDAC-4E8B-9ADD-E1A08A78BEAE}.Debug|x86.ActiveCfg = Debug|Win32
+		{048CDDD2-EDAC-4E8B-9ADD-E1A08A78BEAE}.Debug|x86.Build.0 = Debug|Win32
+		{048CDDD2-EDAC-4E8B-9ADD-E1A08A78BEAE}.Release|x64.ActiveCfg = Release|x64
+		{048CDDD2-EDAC-4E8B-9ADD-E1A08A78BEAE}.Release|x64.Build.0 = Release|x64
+		{048CDDD2-EDAC-4E8B-9ADD-E1A08A78BEAE}.Release|x86.ActiveCfg = Release|Win32
+		{048CDDD2-EDAC-4E8B-9ADD-E1A08A78BEAE}.Release|x86.Build.0 = Release|Win32
+		{76B831DF-4AE0-4CCF-A7F8-737122840BE1}.Debug|x64.ActiveCfg = Debug|x64
+		{76B831DF-4AE0-4CCF-A7F8-737122840BE1}.Debug|x64.Build.0 = Debug|x64
+		{76B831DF-4AE0-4CCF-A7F8-737122840BE1}.Debug|x86.ActiveCfg = Debug|x64
+		{76B831DF-4AE0-4CCF-A7F8-737122840BE1}.Release|x64.ActiveCfg = Release|x64
+		{76B831DF-4AE0-4CCF-A7F8-737122840BE1}.Release|x64.Build.0 = Release|x64
+		{76B831DF-4AE0-4CCF-A7F8-737122840BE1}.Release|x86.ActiveCfg = Release|x64
+		{E57CA8BA-1397-413A-9167-0A189440D021}.Debug|x64.ActiveCfg = Debug|x64
+		{E57CA8BA-1397-413A-9167-0A189440D021}.Debug|x86.ActiveCfg = Debug|x64
+		{E57CA8BA-1397-413A-9167-0A189440D021}.Release|x64.ActiveCfg = Release|x64
+		{E57CA8BA-1397-413A-9167-0A189440D021}.Release|x86.ActiveCfg = Release|x64
+		{B7C24A7A-B7A3-4A7B-891B-F4B39B271822}.Debug|x64.ActiveCfg = Debug|x64
+		{B7C24A7A-B7A3-4A7B-891B-F4B39B271822}.Debug|x86.ActiveCfg = Debug|x64
+		{B7C24A7A-B7A3-4A7B-891B-F4B39B271822}.Release|x64.ActiveCfg = Release|x64
+		{B7C24A7A-B7A3-4A7B-891B-F4B39B271822}.Release|x86.ActiveCfg = Release|x64
+		{E57CA8BA-1397-413A-9167-0A189440D021}.Debug|x64.Build.0 = Debug|x64
+		{E57CA8BA-1397-413A-9167-0A189440D021}.Release|x64.Build.0 = Release|x64
+		{A6B2899F-3292-4A44-8553-7690BA17491A}.Debug|x64.ActiveCfg = Debug|x64
+		{A6B2899F-3292-4A44-8553-7690BA17491A}.Debug|x86.ActiveCfg = Debug|x64
+		{A6B2899F-3292-4A44-8553-7690BA17491A}.Release|x64.ActiveCfg = Release|x64
+		{A6B2899F-3292-4A44-8553-7690BA17491A}.Release|x86.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3599423F-B48C-40FC-8E4C-A0520463DD59}
+	EndGlobalSection
+EndGlobal

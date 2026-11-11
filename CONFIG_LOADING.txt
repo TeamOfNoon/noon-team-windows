@@ -1,0 +1,28 @@
+Configuration loading order
+
+1. Read the original web config from the raw EXE payload (www/res/config.js,
+   corresponding to bin/app/www/res/config.js).
+2. Overlay the original embedded bin/config.js from the raw EXE payload.
+3. Overlay external bin/config.js next to Noon.exe, or the configured --config
+   path. Missing external config leaves embedded defaults intact.
+4. Apply live search engine, application edition and forum/index state in RAM.
+
+Nested objects merge recursively; external values win. Arrays replace arrays.
+JSON and NT_CONFIG JavaScript object wrappers are accepted without executing JS.
+Java services and the served web config use the same merged settings.
+Startup configuration loading does not rewrite either configuration source.
+Explicit settings saves and standalone web exports retain their existing writes.
+
+Rebuild the full solution/NoonJava DLL before building the new EXE.
+Validation: Java server sources compile (native Graal entry excluded); focused
+configuration checks pass for base/default loading, missing external file,
+JSON/JS wrappers, nested precedence, false/zero/arrays and unchanged source bytes.
+Windows EXE execution was not available in this environment.
+
+Build inputs: NT/app/, NT/db/, optional NT/lucene/. NT is beside
+MfcEdgeDemo.vcxproj. Templates use NT/templets or the existing project templets.
+bin/config.js remains the desktop config source. Generated output is unchanged.
+BUILD_BIN.log captures build failures.
+
+Signing key: ../NoonKeys/noon_private.pem
+Original signing location retained with drive set to G:.

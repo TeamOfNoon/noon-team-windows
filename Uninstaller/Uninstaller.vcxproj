@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration><ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
+<PropertyGroup Label="Globals"><ProjectGuid>{A6B2899F-3292-4A44-8553-7690BA17491A}</ProjectGuid><Keyword>MFCProj</Keyword><RootNamespace>NoonUninstaller</RootNamespace><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
+<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+<PropertyGroup Label="Configuration"><ConfigurationType>Application</ConfigurationType><UseDebugLibraries Condition="'$(Configuration)'=='Debug'">true</UseDebugLibraries><UseDebugLibraries Condition="'$(Configuration)'!='Debug'">false</UseDebugLibraries><PlatformToolset>v142</PlatformToolset><UseOfMfc>Static</UseOfMfc><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+<PropertyGroup><TargetName>Uninstall</TargetName><OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir><IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir><NoonBuildInstaller Condition="'$(NoonBuildInstaller)'==''">true</NoonBuildInstaller></PropertyGroup>
+<ItemDefinitionGroup><ClCompile><WarningLevel>Level4</WarningLevel><ExceptionHandling>Sync</ExceptionHandling><PrecompiledHeader>NotUsing</PrecompiledHeader><LanguageStandard>stdcpp17</LanguageStandard><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><PreprocessorDefinitions>WIN32;_WINDOWS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><RuntimeLibrary Condition="'$(Configuration)'=='Debug'">MultiThreadedDebug</RuntimeLibrary><RuntimeLibrary Condition="'$(Configuration)'!='Debug'">MultiThreaded</RuntimeLibrary></ClCompile><Link><SubSystem>Windows</SubSystem><GenerateManifest>true</GenerateManifest><EnableUAC>true</EnableUAC><UACExecutionLevel>RequireAdministrator</UACExecutionLevel><UACUIAccess>false</UACUIAccess><GenerateDebugInformation>true</GenerateDebugInformation><AdditionalDependencies>shell32.lib;ole32.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link><Manifest><AdditionalManifestFiles>$(ProjectDir)Uninstaller.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles><EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness></Manifest></ItemDefinitionGroup>
+<ItemGroup><ClCompile Include="Uninstaller.cpp"/><ResourceCompile Include="Uninstaller.rc"/><None Include="Uninstaller.manifest"/></ItemGroup>
+
+
+<ItemGroup>
+</ItemGroup>
+<ItemGroup>
+<ClCompile Include="SourceBase\EdgeWebBrowser.cpp"/>
+<ClCompile Include="SourceBase\MainFrm.cpp"/>
+<ClCompile Include="SourceBase\MfcEdgeDemo.cpp"/>
+<ClCompile Include="SourceBase\MfcEdgeDemoDoc.cpp"/>
+<ClCompile Include="SourceBase\MfcEdgeDemoView.cpp"/>
+<ClCompile Include="SourceBase\NavigationBar.cpp"/>
+<ClCompile Include="SourceBase\ProtectedMfcApp.cpp"/>
+<ClCompile Include="SourceBase\pch.cpp"/>
+<ClInclude Include="SourceBase\Booter.h"/>
+<ClInclude Include="SourceBase\EdgeWebBrowser.h"/>
+<ClInclude Include="SourceBase\MainFrm.h"/>
+<ClInclude Include="SourceBase\Messages.h"/>
+<ClInclude Include="SourceBase\MfcEdgeDemo.h"/>
+<ClInclude Include="SourceBase\MfcEdgeDemoDoc.h"/>
+<ClInclude Include="SourceBase\MfcEdgeDemoView.h"/>
+<ClInclude Include="SourceBase\NavigationBar.h"/>
+<ClInclude Include="SourceBase\framework.h"/>
+<ClInclude Include="SourceBase\pch.h"/>
+<ClInclude Include="SourceBase\resource.h"/>
+<ClInclude Include="SourceBase\targetver.h"/>
+</ItemGroup>
+<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+
+</Project>

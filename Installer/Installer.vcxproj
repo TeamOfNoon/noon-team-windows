@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration><ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
+<PropertyGroup Label="Globals"><ProjectGuid>{E57CA8BA-1397-413A-9167-0A189440D021}</ProjectGuid><Keyword>MFCProj</Keyword><RootNamespace>NoonInstaller</RootNamespace><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
+<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+<PropertyGroup Label="Configuration"><ConfigurationType>Application</ConfigurationType><UseDebugLibraries Condition="'$(Configuration)'=='Debug'">true</UseDebugLibraries><UseDebugLibraries Condition="'$(Configuration)'!='Debug'">false</UseDebugLibraries><PlatformToolset>v142</PlatformToolset><UseOfMfc>Static</UseOfMfc><CharacterSet>Unicode</CharacterSet></PropertyGroup>
+<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+<PropertyGroup><TargetName>Noon_Setup_Stub</TargetName><OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir><IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir><NoonBuildInstaller Condition="'$(NoonBuildInstaller)'==''">true</NoonBuildInstaller></PropertyGroup>
+<ItemDefinitionGroup><ClCompile><WarningLevel>Level4</WarningLevel><ExceptionHandling>Sync</ExceptionHandling><PrecompiledHeader>NotUsing</PrecompiledHeader><LanguageStandard>stdcpp17</LanguageStandard><AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions><PreprocessorDefinitions>WIN32;_WINDOWS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions><RuntimeLibrary Condition="'$(Configuration)'=='Debug'">MultiThreadedDebug</RuntimeLibrary><RuntimeLibrary Condition="'$(Configuration)'!='Debug'">MultiThreaded</RuntimeLibrary></ClCompile><Link><SubSystem>Windows</SubSystem><GenerateManifest>true</GenerateManifest><EnableUAC>true</EnableUAC><UACExecutionLevel>RequireAdministrator</UACExecutionLevel><UACUIAccess>false</UACUIAccess><GenerateDebugInformation>true</GenerateDebugInformation><AdditionalDependencies>shell32.lib;ole32.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies></Link><Manifest><AdditionalManifestFiles>$(ProjectDir)Installer.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles><EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness></Manifest></ItemDefinitionGroup>
+<ItemGroup><ClCompile Include="Installer.cpp"/><ResourceCompile Include="Installer.rc"/><None Include="Installer.manifest"/><None Include="SetupMetadata.bin"/><None Include="SetupEdition.bin"/><None Include="..\GetAppType.ps1"/><None Include="Uninstall.bat"/><None Include="Uninstall.ps1"/><None Include="BuildInstaller.ps1"/><None Include="Tools\License.txt"/></ItemGroup>
+<ItemGroup><ProjectReference Include="..\MfcEdgeDemo.vcxproj"><Project>{048CDDD2-EDAC-4E8B-9ADD-E1A08A78BEAE}</Project><LinkLibraryDependencies>false</LinkLibraryDependencies><ReferenceOutputAssembly>false</ReferenceOutputAssembly></ProjectReference></ItemGroup>
+
+<ItemGroup>
+<ClCompile Include="..\AppBuilder.cpp"><ExcludedFromBuild>true</ExcludedFromBuild></ClCompile>
+<ClCompile Include="..\BrowserLaunch.cpp"><ExcludedFromBuild>true</ExcludedFromBuild></ClCompile>
+<ClCompile Include="..\BuildGui.cpp"><ExcludedFromBuild>true</ExcludedFromBuild></ClCompile>
+<ClCompile Include="..\EdgeWebBrowser.cpp"><ExcludedFromBuild>true</ExcludedFromBuild></ClCompile>
+<ClCompile Include="..\MainFrm.cpp"><ExcludedFromBuild>true</ExcludedFromBuild></ClCompile>
+<ClCompile Include="..\MfcEdgeDemo.cpp"><ExcludedFromBuild>true</ExcludedFromBuild></ClCompile>
+<ClCompile Include="..\MfcEdgeDemoDoc.cpp"><ExcludedFromBuild>true</ExcludedFromBuild></ClCompile>
+<ClCompile Include="..\MfcEdgeDemoView.cpp"><ExcludedFromBuild>true</ExcludedFromBuild></ClCompile>
+<ClCompile Include="..\NavigationBar.cpp"><ExcludedFromBuild>true</ExcludedFromBuild></ClCompile>
+<ClCompile Include="..\NoonServer.cpp"><ExcludedFromBuild>true</ExcludedFromBuild></ClCompile>
+<ClCompile Include="..\pch.cpp"><ExcludedFromBuild>true</ExcludedFromBuild></ClCompile>
+<ClInclude Include="InstallTransaction.h"/>
+<ClInclude Include="ExistingInstallation.h"/>
+<ClInclude Include="..\AppBuilder.h"/>
+<ClInclude Include="..\BrowserLaunch.h"/>
+<ClInclude Include="..\BuildGui.h"/>
+<ClInclude Include="..\EdgeWebBrowser.h"/>
+<ClInclude Include="..\EmbeddedWeb.h"/>
+<ClInclude Include="..\EmbeddedWebFiles.h"/>
+<ClInclude Include="..\MainFrm.h"/>
+<ClInclude Include="..\Messages.h"/>
+<ClInclude Include="..\MfcEdgeDemo.h"/>
+<ClInclude Include="..\MfcEdgeDemoDoc.h"/>
+<ClInclude Include="..\MfcEdgeDemoView.h"/>
+<ClInclude Include="..\NavigationBar.h"/>
+<ClInclude Include="..\NoonServer.h"/>
+<ClInclude Include="..\framework.h"/>
+<ClInclude Include="..\pch.h"/>
+<ClInclude Include="..\resource.h"/>
+<ClInclude Include="..\targetver.h"/>
+</ItemGroup>
+
+<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+<Target Name="PackageNoonSetup" AfterTargets="Build" Condition="'$(NoonBuildInstaller)'=='true'">
+<MSBuild Projects="$(ProjectDir)..\MfcEdgeDemo.vcxproj" Targets="GetTargetPath" Properties="Configuration=$(Configuration);Platform=x64"><Output TaskParameter="TargetOutputs" ItemName="NoonMainExe"/></MSBuild>
+
+<Error Condition="'@(NoonMainExe)'==''" Text="Cannot locate built main EXE."/>
+<Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)BuildInstaller.ps1&quot; -AppExe &quot;@(NoonMainExe)&quot; -StubExe &quot;$(TargetPath)&quot; -OutputExe &quot;$(OutDir)Noon_Setup.exe&quot;"/>
+</Target>
+</Project>

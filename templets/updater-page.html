@@ -1,0 +1,327 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Noon Update</title>
+<style>
+*{box-sizing:border-box}
+html,body{width:100%;min-height:100%;overflow-x:hidden}
+body{margin:0;background:#f5f6f8;color:#222;font-family:Arial,sans-serif;line-height:1.45;-webkit-text-size-adjust:100%}
+.wrap{width:100%;max-width:720px;margin:0 auto;padding:24px 16px 36px}
+.card{width:100%;background:#fff;border:1px solid #e2e5e9;border-radius:14px;padding:22px;box-shadow:0 3px 14px rgba(0,0,0,.04)}
+h1{font-size:25px;line-height:1.2;margin:0 0 8px}
+.sub{margin:0 0 20px;color:#666;font-size:15px}
+.status{border-radius:12px;background:#f7f8fa;padding:18px;margin:0 0 20px}
+.status-title{font-size:18px;font-weight:700;margin-bottom:4px}
+.status-text{color:#666}
+.progress{height:10px;background:#e6e9ed;border-radius:999px;overflow:hidden;margin-top:14px;display:none}
+.progress>div{height:100%;width:35%;background:#555;border-radius:999px;animation:move 1.1s ease-in-out infinite alternate}
+@keyframes move{from{transform:translateX(-90%)}to{transform:translateX(260%)}}
+.summary{display:none;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.stat{border:1px solid #e3e6ea;border-radius:12px;padding:16px;text-align:center}
+.stat b{display:block;font-size:27px;line-height:1.1;margin-bottom:4px}
+.stat span{color:#666;font-size:14px}
+.sections{display:none;margin:18px 0 4px}
+.section{padding:11px 2px;border-bottom:1px solid #eee}
+.section:last-child{border-bottom:0}
+.section-main{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.section-name{font-weight:600;min-width:0}
+.section-right{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-width:0}
+.section-count{color:#666;text-align:right;overflow-wrap:anywhere}
+.detail-btn{display:none;min-height:30px;padding:5px 9px;border-radius:8px;background:#eef1f4;color:#333;font-size:12px;font-weight:700;white-space:nowrap}
+.detail-panel{display:none;margin-top:9px;padding:9px;background:#f8f9fb;border:1px solid #e7e9ed;border-radius:9px}
+.detail-panel.open{display:block}
+.detail-item{padding:7px 2px;border-bottom:1px solid #e8eaee;font-size:12px;color:#555;overflow-wrap:anywhere}
+.detail-item:last-child{border-bottom:0}
+.detail-line{display:flex;justify-content:space-between;gap:8px}
+.detail-type{font-weight:700;color:#333;text-transform:capitalize}
+.detail-meta{margin-top:2px;color:#777}
+.detail-empty{font-size:12px;color:#777}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+button{appearance:none;-webkit-appearance:none;border:0;border-radius:10px;min-height:46px;padding:12px 18px;font-size:16px;font-weight:700;cursor:pointer;touch-action:manipulation}
+button.primary{background:#222;color:#fff}
+button.secondary{background:#eceff2;color:#222}
+button:disabled{opacity:.45;cursor:default}
+.note{font-size:13px;color:#777;margin-top:16px}
+.error{color:#a01818}
+.success{color:#176b38}
+@media(max-width:560px){
+  .wrap{padding:12px 10px 24px}
+  .card{padding:18px 14px;border-radius:12px}
+  h1{font-size:22px}
+  .sub{font-size:14px;margin-bottom:16px}
+  .status{padding:15px;margin-bottom:16px}
+  .status-title{font-size:17px}
+  .status-text{font-size:14px}
+  .summary{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:15px 0}
+  .stat{padding:12px 6px;border-radius:10px}
+  .stat b{font-size:22px}
+  .stat span{font-size:12px}
+  .section{padding:12px 0}
+  .section-main{align-items:center;gap:8px}
+  .section-name{font-size:14px}
+  .section-right{gap:6px;max-width:70%}
+  .section-count{font-size:13px;max-width:none}
+  .detail-btn{font-size:11px;min-height:28px;padding:4px 7px}
+  .detail-panel{padding:8px;margin-top:8px}
+  .actions{display:grid;grid-template-columns:1fr;gap:9px;margin-top:18px}
+  .actions button{width:100%;min-height:48px}
+  .note{font-size:12px;margin-top:13px}
+}
+@media(max-width:360px){
+  .wrap{padding-left:7px;padding-right:7px}
+  .card{padding-left:11px;padding-right:11px}
+  .summary{gap:5px}
+  .stat{padding-left:3px;padding-right:3px}
+  .stat b{font-size:20px}
+  .stat span{font-size:11px}
+  .section-main{align-items:flex-start}
+  .section-right{max-width:68%;flex-wrap:wrap}
+  .section-count{text-align:right}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Update Noon</h1>
+    <p class="sub">Keep your local content up to date with the latest available changes.</p>
+
+    <div class="status" id="statusBox">
+      <div class="status-title" id="statusTitle">Ready to check</div>
+      <div class="status-text" id="statusText">Check for updates to see if newer content is available.</div>
+      <div class="progress" id="progress"><div></div></div>
+    </div>
+
+    <div class="summary" id="summary">
+      <div class="stat"><b id="added">0</b><span>New</span></div>
+      <div class="stat"><b id="modified">0</b><span>Updated</span></div>
+      <div class="stat"><b id="removed">0</b><span>Removed</span></div>
+    </div>
+
+    <div class="sections" id="sections">
+      <div class="section">
+        <div class="section-main"><span class="section-name">Threads</span><span class="section-right"><span class="section-count" id="threads">No changes</span><button class="detail-btn" id="threadsBtn" type="button">Details</button></span></div>
+        <div class="detail-panel" id="threadsDetails"></div>
+      </div>
+      <div class="section">
+        <div class="section-main"><span class="section-name">Posts</span><span class="section-right"><span class="section-count" id="posts">No changes</span><button class="detail-btn" id="postsBtn" type="button">Details</button></span></div>
+        <div class="detail-panel" id="postsDetails"></div>
+      </div>
+      <div class="section">
+        <div class="section-main"><span class="section-name">Languages</span><span class="section-right"><span class="section-count" id="langs">No changes</span><button class="detail-btn" id="langsBtn" type="button">Details</button></span></div>
+        <div class="detail-panel" id="langsDetails"></div>
+      </div>
+      <div class="section">
+        <div class="section-main"><span class="section-name">YouTube</span><span class="section-right"><span class="section-count" id="youtube">No changes</span><button class="detail-btn" id="youtubeBtn" type="button">Details</button></span></div>
+        <div class="detail-panel" id="youtubeDetails"></div>
+      </div>
+      <div class="section">
+        <div class="section-main"><span class="section-name">Sound</span><span class="section-right"><span class="section-count" id="sound">No changes</span><button class="detail-btn" id="soundBtn" type="button">Details</button></span></div>
+        <div class="detail-panel" id="soundDetails"></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="primary" id="check">Check for updates</button>
+      <button class="primary" id="apply" disabled>Update now</button>
+      <button class="secondary" id="compact">Optimize database</button>
+    </div>
+
+    <div class="note">Nothing is changed until you choose <b>Update now</b>.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+var check=document.getElementById('check');
+var apply=document.getElementById('apply');
+var compact=document.getElementById('compact');
+var statusTitle=document.getElementById('statusTitle');
+var statusText=document.getElementById('statusText');
+var progress=document.getElementById('progress');
+var summary=document.getElementById('summary');
+var sections=document.getElementById('sections');
+var detected=false;
+
+function setBusy(v,title,text){
+  check.disabled=v;
+  apply.disabled=v || !detected;
+  compact.disabled=v;
+  progress.style.display=v?'block':'none';
+  if(title)statusTitle.textContent=title;
+  if(text)statusText.textContent=text;
+}
+
+function request(method,url,done){
+  var x=new XMLHttpRequest();
+  x.open(method,url,true);
+  x.onreadystatechange=function(){
+    if(x.readyState!==4)return;
+    if(x.status>=200&&x.status<300){
+      try{
+        var r=JSON.parse(x.responseText);
+        if(r.ok===false){showError(r.error||'The operation could not be completed.');return;}
+        done(r);
+      }catch(e){showError('The updater received an invalid response.');}
+    }else{
+      showError('Unable to contact the local updater. Error '+x.status+'.');
+    }
+  };
+  x.send(null);
+}
+
+function n(v){return Number(v||0);}
+function changeText(a,m,r){
+  var total=n(a)+n(m)+n(r);
+  if(!total)return 'No changes';
+  var parts=[];
+  if(n(a))parts.push(n(a)+' new');
+  if(n(m))parts.push(n(m)+' updated');
+  if(n(r))parts.push(n(r)+' removed');
+  return parts.join(' · ');
+}
+
+function esc(v){
+  return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});
+}
+function niceType(v){
+  v=String(v||'changed');
+  if(v==='new'||v==='added')return 'New';
+  if(v==='deleted'||v==='removed')return 'Removed';
+  return 'Updated';
+}
+function niceDate(v){
+  var x=Number(v||0);
+  if(!x)return '';
+  try{return new Date(x*1000).toLocaleString();}catch(e){return '';}
+}
+function setupDetails(key,items){
+  var btn=document.getElementById(key+'Btn');
+  var panel=document.getElementById(key+'Details');
+  items=Array.isArray(items)?items:[];
+  panel.className='detail-panel';
+  btn.textContent='Details';
+  if(!items.length){btn.style.display='none';panel.innerHTML='';return;}
+  btn.style.display='inline-block';
+  var html='';
+  for(var i=0;i<items.length;i++){
+    var x=items[i]||{};
+    var id=x.id!=null?x.id:(x.postid!=null?x.postid:'');
+    var dt=niceDate(x.datetime);
+    html+='<div class="detail-item"><div class="detail-line"><span class="detail-type">'+esc(niceType(x.type))+'</span><span>ID '+esc(id)+'</span></div>';
+    html+='<div class="detail-meta">'+(x.formid?'Form '+esc(x.formid):'')+(dt?' · '+esc(dt):'')+'</div>';
+    if(x.path)html+='<div class="detail-meta">'+esc(x.path)+'</div>';
+    html+='</div>';
+  }
+  panel.innerHTML=html;
+  btn.onclick=function(){
+    var open=panel.className.indexOf('open')>=0;
+    panel.className=open?'detail-panel':'detail-panel open';
+    btn.textContent=open?'Details':'Hide';
+  };
+}
+function clearDetails(){
+  ['threads','posts','langs','youtube','sound'].forEach(function(k){setupDetails(k,[]);});
+}
+
+function showError(msg){
+  detected=false;
+  setBusy(false);
+  apply.disabled=true;
+  statusTitle.textContent='Update check failed';
+  statusTitle.className='status-title error';
+  statusText.textContent=msg;
+}
+
+function showResult(r,afterApply){
+  setBusy(false);
+  statusTitle.className='status-title';
+
+  if(afterApply){
+    detected=false;
+    apply.disabled=true;
+    summary.style.display='none';
+    sections.style.display='none';
+    clearDetails();
+    statusTitle.textContent='Update complete';
+    statusTitle.className='status-title success';
+    statusText.textContent='Your local content is now up to date.';
+    return;
+  }
+
+  var t=r.threads||{};
+  var p=r.posts||{};
+  var z={added:0,modified:0,removed:0,total:0};
+  var m=r.metadata||{langs:z,youtube:z,sound:z};
+  m.langs=m.langs||z;m.youtube=m.youtube||z;m.sound=m.sound||z;
+
+  var added=n(t['new'])+n(p['new'])+n(m.langs.added)+n(m.youtube.added)+n(m.sound.added);
+  var modified=n(t.changed)+n(p.changed)+n(m.langs.modified)+n(m.youtube.modified)+n(m.sound.modified);
+  var removed=n(t.deleted)+n(p.deleted)+n(m.langs.removed)+n(m.youtube.removed)+n(m.sound.removed);
+  var total=added+modified+removed;
+
+  document.getElementById('added').textContent=added;
+  document.getElementById('modified').textContent=modified;
+  document.getElementById('removed').textContent=removed;
+  document.getElementById('threads').textContent=changeText(t['new'],t.changed,t.deleted);
+  document.getElementById('posts').textContent=changeText(p['new'],p.changed,p.deleted);
+  document.getElementById('langs').textContent=changeText(m.langs.added,m.langs.modified,m.langs.removed);
+  document.getElementById('youtube').textContent=changeText(m.youtube.added,m.youtube.modified,m.youtube.removed);
+  document.getElementById('sound').textContent=changeText(m.sound.added,m.sound.modified,m.sound.removed);
+  setupDetails('threads',t.changes);
+  setupDetails('posts',p.changes);
+  setupDetails('langs',m.langs.changes);
+  setupDetails('youtube',m.youtube.changes);
+  setupDetails('sound',m.sound.changes);
+
+  if(total===0){
+    detected=false;
+    apply.disabled=true;
+    summary.style.display='none';
+    sections.style.display='none';
+    statusTitle.textContent='You are up to date';
+    statusTitle.className='status-title success';
+    statusText.textContent='No new updates are available right now.';
+  }else{
+    detected=true;
+    apply.disabled=false;
+    summary.style.display='grid';
+    sections.style.display='block';
+    statusTitle.textContent='Update available';
+    statusText.textContent=total+' change'+(total===1?' is':'s are')+' ready to install.';
+  }
+}
+
+check.onclick=function(){
+  detected=false;
+  apply.disabled=true;
+  summary.style.display='none';
+  sections.style.display='none';
+  clearDetails();
+  statusTitle.className='status-title';
+  setBusy(true,'Checking for updates','Looking for newer content...');
+  request('GET','/__updater/scan',function(r){showResult(r,false);});
+};
+
+apply.onclick=function(){
+  if(!detected)return;
+  apply.disabled=true;
+  setBusy(true,'Updating','Installing the available changes...');
+  request('POST','/__updater/apply',function(r){showResult(r,true);});
+};
+
+compact.onclick=function(){
+  setBusy(true,'Optimizing database','Cleaning and optimizing the local database...');
+  request('POST','/__updater/compact',function(r){
+    setBusy(false);
+    statusTitle.className='status-title success';
+    statusTitle.textContent='Optimization complete';
+    statusText.textContent='The local database was optimized successfully.';
+  });
+};
+})();
+</script>
+</body>
+</html>

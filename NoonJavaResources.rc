@@ -1,0 +1,4 @@
+#include <windows.h>
+301 RCDATA "NoonJava/dist/NoonJava.dll"
+302 RCDATA "NoonJava/runtime/vcruntime140.dll"
+303 RCDATA "NoonJava/runtime/vcruntime140_1.dll"

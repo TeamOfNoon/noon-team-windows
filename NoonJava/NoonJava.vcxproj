@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals"><ProjectGuid>{76B831DF-4AE0-4CCF-A7F8-737122840BE1}</ProjectGuid><Keyword>Win32Proj</Keyword><ProjectName>NoonJava</ProjectName><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration"><ConfigurationType>Utility</ConfigurationType><PlatformToolset>v142</PlatformToolset></PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="..\BuildSettings.props" />
+  <PropertyGroup><IntDir>$(ProjectDir)build\$(Configuration)\</IntDir><OutDir>$(ProjectDir)dist\</OutDir></PropertyGroup>
+  <ItemGroup>
+    <None Include="src\AppIndexConfig.java" />
+    <None Include="src\CompactIndexExporter.java" />
+    <None Include="src\OfflineSearchRanking.java" />
+    <None Include="src\DatLuceneIndexer.java" />
+    <None Include="src\DefaultSqlTemplates.java" />
+    <None Include="src\DependencyCheck.java" />
+    <None Include="src\DesktopSearchRuntime.java" />
+    <None Include="src\DynamicJs.java" />
+    <None Include="src\EmbeddedBin.java" />
+    <None Include="src\EmbeddedLuceneDirectory.java" />
+    <None Include="src\EmbeddedIndexInput.java" />
+    <None Include="src\LuceneIndexSource.java" />
+    <None Include="src\PartialIndexSupport.java" />
+    <None Include="src\EmbeddedWebHttpServer.java" />
+    <None Include="src\EmbeddedWebResources.java" />
+    <None Include="src\ForumPackageManager.java" />
+    <None Include="src\LuceneIndexManager.java" />
+    <None Include="src\LuceneSearchService.java" />
+    <None Include="src\LocalUrlSafety.java" />
+    <None Include="src\LzmaDecoder.java" />
+    <None Include="src\NoonJavaLibrary.java" />
+    <None Include="src\OriginalDateFields.java" />
+    <None Include="src\PlainSqliteCatalog.java" />
+    <None Include="src\SavedServerPort.java" />
+    <None Include="src\SignedBinIntegrity.java" />
+    <None Include="tools\signing\SignBin.java" />
+    <None Include="..\SigningSettings.properties" />
+    <None Include="tools\signing\VerifySignedBin.java" />
+    <None Include="src\SearchIndexConfig.java" />
+    <None Include="src\SearchQuerySupport.java" />
+    <None Include="src\SearchTextSupport.java" />
+    <None Include="src\SearchTextNormalizer.java" />
+    <None Include="src\SearchSnippetPreview.java" />
+    <None Include="src\SqlTemplateConfig.java" />
+    <None Include="src\SqliteLuceneIndexer.java" />
+    <None Include="src\StartupPage.java" />
+    <None Include="resources\noon-startup\logo.png" />
+    <None Include="src\TemplateMath.java" />
+    <None Include="src\UpdateConfig.java" />
+    <None Include="src\VBulletinBbCode.java" />
+    <None Include="src\general_function.java" />
+    <None Include="tools\CompileDesktop.java" />
+    <None Include="tools\nt\BuildNt.java" />
+    <None Include="tools\nt\StageLucene.java" />
+    <None Include="tools\nt\DbStateGuard.java" />
+    <None Include="tools\nt\DtBuilder.java" />
+    <None Include="BUILD_HTTP_DLL.bat" />
+    <None Include="lib\commons-lang-2.6.jar" />
+    <None Include="lib\json-20250517.jar" />
+    <None Include="lib\jsoup-1.23.1.jar" />
+    <None Include="lib\lucene-analyzers-common-5.3.0.jar" />
+    <None Include="lib\lucene-core-5.3.0.jar" />
+    <None Include="lib\slf4j-api-1.7.36.jar" />
+    <None Include="lib\slf4j-nop-1.7.36.jar" />
+    <None Include="lib\sqlite-jdbc-3.45.3.0.jar" />
+    <None Include="native-config\reflect-config.json" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <!-- Wildcards are build-time inputs only; IDE project items above are explicit. -->
+  <Target Name="CollectNoonJavaInputs">
+    <ItemGroup>
+      <NoonJavaBuildInput Include="$(ProjectDir)src\*.java;$(ProjectDir)resources\**\*;$(ProjectDir)lib\*.jar;$(ProjectDir)native-config\*.json;$(ProjectDir)tools\CompileDesktop.java;$(ProjectDir)BUILD_HTTP_DLL.bat" />
+    </ItemGroup>
+  </Target>
+  <Target Name="CheckNoonToolchain" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(Platform)'!='x64'" Text="NoonJava requires x64." />
+    <Error Condition="!Exists('$(NoonGraalVMHome)\bin\native-image.cmd')" Text="Set NoonGraalVMHome in BuildSettings.props to your GraalVM installation." />
+  </Target>
+  <Target Name="PrepareNoonSigningKey" DependsOnTargets="CheckNoonToolchain">
+    <Exec Command="call &quot;$(ProjectDir)..\PREPARE_SIGNING_KEY.bat&quot; &quot;$(NoonGraalVMHome)&quot;" />
+  </Target>
+  <Target Name="BuildNoonJavaDll" BeforeTargets="PrepareForBuild" DependsOnTargets="PrepareNoonSigningKey;CollectNoonJavaInputs"
+    Inputs="@(NoonJavaBuildInput);$(ProjectDir)..\BuildSettings.props;$(MSBuildProjectFullPath)"
+    Outputs="$(ProjectDir)dist\NoonJava.dll;$(ProjectDir)dist\NoonJava.h;$(ProjectDir)dist\graal_isolate.h">
+    <Exec Command="call &quot;$(ProjectDir)BUILD_HTTP_DLL.bat&quot; &quot;$(NoonGraalVMHome)&quot; &quot;$(VSInstallDir)&quot;" />
+  </Target>
+  <!-- The VC build logger keeps $(IntDir)NoonJava.log open during Clean.
+       Remove only generated Java/native outputs, never the build/log parent. -->
+  <Target Name="CleanNoonJava" AfterTargets="Clean">
+    <RemoveDir Directories="$(ProjectDir)build\classes;$(ProjectDir)build\nttool;$(ProjectDir)build\signing;$(ProjectDir)build\verify;$(ProjectDir)dist" />
+  </Target>
+</Project>

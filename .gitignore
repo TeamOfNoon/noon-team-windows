@@ -1,0 +1,37 @@
+# Visual Studio and restored dependencies
+.vs/
+*.user
+*.suo
+/packages/
+/NWRuntime/
+Debug/
+Release/
+x64/
+Win32/
+*.obj
+*.pdb
+*.ilk
+*.tlog
+
+# Generated files and local payloads
+/NoonJava/build/
+/NoonJava/dist/
+/Installer/bin/
+/Uninstaller/bin/
+/InnoSetup/bin/
+/bin/
+/www/
+*.db
+*.sqlite
+*.sqlite3
+/NT/app.dat
+
+# Local signing configuration and keys
+/SigningSettings.properties
+*.pem
+*.key
+*.pfx
+*.p12
+*.pk8
+*.jks
+/NoonJava/resources/noon-integrity/public_key.der

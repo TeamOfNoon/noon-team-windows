@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<ItemGroup Label="ProjectConfigurations"><ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration><ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration></ItemGroup>
+<PropertyGroup Label="Globals"><ProjectGuid>{B7C24A7A-B7A3-4A7B-891B-F4B39B271822}</ProjectGuid><Keyword>Win32Proj</Keyword><RootNamespace>NoonInnoSetup</RootNamespace><WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion></PropertyGroup>
+<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+<PropertyGroup Label="Configuration"><ConfigurationType>Utility</ConfigurationType><PlatformToolset>v142</PlatformToolset></PropertyGroup>
+<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+<Import Project="..\ProductInfo.props"/>
+<Import Project="InnoSetupSettings.props"/>
+<PropertyGroup><NoonEnableInnoSetup Condition="'$(NoonEnableInnoSetup)'==''">false</NoonEnableInnoSetup><OutDir>$(ProjectDir)bin\$(Platform)\$(Configuration)\</OutDir><IntDir>$(ProjectDir)obj\$(Platform)\$(Configuration)\</IntDir></PropertyGroup>
+<ItemGroup><None Include="Noon.iss"/><None Include="BuildInnoSetup.ps1"/><None Include="InnoSetupSettings.props"/><None Include="README_INNO_SETUP.txt"/></ItemGroup>
+<ItemGroup><ProjectReference Include="..\MfcEdgeDemo.vcxproj"><Project>{048CDDD2-EDAC-4E8B-9ADD-E1A08A78BEAE}</Project><LinkLibraryDependencies>false</LinkLibraryDependencies><ReferenceOutputAssembly>false</ReferenceOutputAssembly></ProjectReference></ItemGroup>
+<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+<Target Name="BuildNoonInnoSetup" AfterTargets="Build" Condition="'$(NoonEnableInnoSetup)'=='true'">
+<MSBuild Projects="$(ProjectDir)..\MfcEdgeDemo.vcxproj" Targets="GetTargetPath" Properties="Configuration=$(Configuration);Platform=x64"><Output TaskParameter="TargetOutputs" ItemName="NoonMainExe"/></MSBuild>
+<Error Condition="'@(NoonMainExe)'==''" Text="Cannot locate main application EXE."/>
+<Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)BuildInnoSetup.ps1&quot; -AppExe &quot;@(NoonMainExe)&quot; -OutputDirectory &quot;$(OutDir).&quot; -CompilerPath &quot;$(InnoSetupCompilerPath)&quot; -AppVersion &quot;$(NoonVersion)&quot; -AppTitle &quot;$(NoonAppName)&quot;"/>
+</Target>
+</Project>
